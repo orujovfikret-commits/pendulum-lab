@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-df = pd.read_csv('L0.50_run1.csv')
+df = pd.read_csv('L0.21_run1.csv')
 
 time = df['Time (s)'].values
 signal = df['Gyroscope z (rad/s)'].values
