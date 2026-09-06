@@ -3,23 +3,18 @@ import pandas as pd
 
 df = pd.read_csv('L0.50_run1.csv')
 
-time = df['Time (s)'].values
-signal = df['Gyroscope z (rad/s)'].values
+time = df['Time (s)']
+signal = df['Gyroscope z (rad/s)']
 
 dt = np.mean(np.diff(time))
-fs = 1.0 / dt
-n = len(signal)
+frequencies = np.fft.rfftfreq(len(signal), d=dt)
+fft_spectrum = np.abs(np.fft.rfft(signal - signal.mean()))
 
-frequencies = np.fft.rfftfreq(n, d=dt)
-fft_spectrum = np.abs(np.fft.rfft(signal - np.mean(signal)))
-
-dominant_freq = frequencies[1:][np.argmax(fft_spectrum[1:])]
-period = 1.0 / dominant_freq
+dominant_freq = frequencies[1 + np.argmax(fft_spectrum[1:])]
+period = 1 / dominant_freq
 
 L = 0.50
-g_calc = (4 * (np.pi ** 2) * L) / (period ** 2)
+g = (4 * np.pi**2 * L) / (period**2)
 
-print(f"Sampling Frequency: {fs:.2f} Hz")
-print(f"Dominant Frequency: {dominant_freq:.3f} Hz")
-print(f"Measured Period (T): {period:.3f} s")
-print(f"Calculated g: {g_calc:.2f} m/s^2")
+print("Period:", period)
+print("Calculated g:", g)
