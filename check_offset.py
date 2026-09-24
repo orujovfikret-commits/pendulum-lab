@@ -25,7 +25,6 @@ for f in files:
 
     s = df_clean[col].values
 
-    # analyze.py ile eyni sade peak axtarisi
     peaks, _ = find_peaks(s, distance=int(0.4/dt), prominence=0.1)
 
     if len(peaks) > 1:
