@@ -2,8 +2,9 @@
 import os
 import numpy as np
 import pandas as pd
+from scipy.signal import find_peaks
 
-files = glob.glob("L*.csv")
+files = sorted(glob.glob("L*.csv"))
 results = []
 
 for f in files:
@@ -12,36 +13,39 @@ for f in files:
 
     df = pd.read_csv(f)
     t = df["Time (s)"].values
-    dt = np.mean(np.diff(t))
-
-    col = "Gyroscope y (rad/s)"
-    if col not in df.columns:
-        col = df.columns[1]
+    dt = t[1] - t[0]
 
     mask = (t > 1.0) & (t < (t.max() - 1.0))
     df_clean = df[mask] if mask.sum() > 10 else df
+    t_clean = df_clean["Time (s)"].values
+
+    col = "Gyroscope y (rad/s)"
+    if col not in df_clean.columns:
+        col = df_clean.columns[1]
 
     s = df_clean[col].values
-    freqs = np.fft.rfftfreq(len(s), d=dt)
-    fft_vals = np.abs(np.fft.rfft(s - np.mean(s)))
 
-    valid = (freqs > 0.3) & (freqs < 2.5)
-    sub_freqs = freqs[valid]
-    sub_fft = fft_vals[valid]
-    freq = sub_freqs[np.argmax(sub_fft)]
+    # analyze.py ile eyni sade peak axtarisi
+    peaks, _ = find_peaks(s, distance=int(0.4/dt), prominence=0.1)
 
-    T = 1.0 / freq
-    g_true = 9.81
-    L_calculated = (g_true * (T**2)) / (4 * np.pi**2)
-    offset_cm = (L_calculated - L_nominal) * 100
+    if len(peaks) > 1:
+        periods = np.diff(t_clean[peaks])
+        T = np.mean(periods)
+    else:
+        T = 0.0
 
-    results.append({
-        "File": name,
-        "L_nominal (m)": L_nominal,
-        "T (s)": round(T, 4),
-        "L_calc (m)": round(L_calculated, 4),
-        "Offset (cm)": round(offset_cm, 2)
-    })
+    if T > 0:
+        g_true = 9.81
+        L_calculated = (g_true * (T**2)) / (4 * np.pi**2)
+        offset_cm = (L_calculated - L_nominal) * 100
+
+        results.append({
+            "File": name,
+            "L_nominal (m)": L_nominal,
+            "T (s)": round(T, 3),
+            "L_calc (m)": round(L_calculated, 3),
+            "Offset (cm)": round(offset_cm, 1)
+        })
 
 df_res = pd.DataFrame(results).sort_values("L_nominal (m)")
 print(df_res.to_string(index=False))
