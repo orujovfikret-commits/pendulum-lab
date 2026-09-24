@@ -5,17 +5,17 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.signal import find_peaks
 
-# TODO: axis_plots qovlugundaki sekillere baxib her fayl ucun duzgun oxu lugetde yenilemek
+# TODO: Check images in axis_plots/ and update the correct rotation axis for each file in the AXIS dictionary
 AXIS = {
     "L0.20_run1.csv": "Gyroscope y (rad/s)",
     "L0.20_run2.csv": "Gyroscope y (rad/s)",
     "L0.30_run1.csv": "Gyroscope y (rad/s)",
     "L0.30_run2.csv": "Gyroscope y (rad/s)",
     "L0.40_run1.csv": "Gyroscope y (rad/s)",
-    "L0.40_run2.csv": "Gyroscope x (rad/s)",
+    "L0.40_run2.csv": "Gyroscope x (rad/s)", 
     "L0.50_run1.csv": "Gyroscope y (rad/s)",
     "L0.50_run2.csv": "Gyroscope y (rad/s)",
-    "L0.70_run1.csv": "Gyroscope z (rad/s)",
+    "L0.70_run1.csv": "Gyroscope z (rad/s)", 
     "L0.70_run2.csv": "Gyroscope y (rad/s)"
 }
 
@@ -28,10 +28,10 @@ for f in files:
 
     df = pd.read_csv(f)
     t = df["Time (s)"].values
-    dt = np.mean(np.diff(t))
+    dt = t[1] - t[0]
 
     mask = (t > 1.0) & (t < (t.max() - 1.0))
-    df_clean = df[mask] if mask.sum() > 10 else df
+    df_clean = df[mask]
     t_clean = df_clean["Time (s)"].values
 
     col = AXIS.get(name, "Gyroscope y (rad/s)")
@@ -40,8 +40,7 @@ for f in files:
 
     s = df_clean[col].values
 
-    min_dist = int(0.6 / dt)
-    peaks, _ = find_peaks(s, distance=min_dist, prominence=0.5)
+    peaks, _ = find_peaks(s, distance=int(0.4/dt), prominence=0.1)
 
     if len(peaks) > 1:
         periods = np.diff(t_clean[peaks])
@@ -50,7 +49,9 @@ for f in files:
         T = 0.0
 
     print(f"File: {name} | Axis: {col.split(' ')[1]} | T = {T:.3f} s")
-    results.append({"L": L, "T": T, "T2": T**2})
+    
+    if T > 0:
+        results.append({"L": L, "T": T, "T2": T**2})
 
 data = pd.DataFrame(results).sort_values("L")
 L_vals = data["L"].values
@@ -59,8 +60,8 @@ T2_vals = data["T2"].values
 m, c = np.polyfit(L_vals, T2_vals, 1)
 g = (4 * np.pi**2) / m
 
-residuals = T2_vals - (m * L_vals + c)
-g_err = abs(g * (np.std(residuals) / np.mean(T2_vals)))
+diff = T2_vals - (m * L_vals + c)
+g_err = abs(g * np.std(diff))
 
 print(f"\nSlope: {m:.3f}")
 print(f"g = {g:.2f} +/- {g_err:.2f} m/s^2")
@@ -70,7 +71,7 @@ plt.plot(L_vals, T2_vals, "ro", label="Data points")
 plt.plot(L_vals, m * L_vals + c, "b-", label=f"T^2 = {m:.2f}L + {c:.2f}")
 plt.xlabel("Length L (m)")
 plt.ylabel("T^2 (s^2)")
-plt.title(f"g = {g:.2f} +/- {g_err:.2f} m/s^2")
+plt.title(f"g = {g:.2f} m/s^2")
 plt.legend()
 plt.grid(True)
 plt.savefig("gravity_fit_plot.png")
