@@ -12,10 +12,10 @@ AXIS = {
     "L0.30_run1.csv": "Gyroscope y (rad/s)",
     "L0.30_run2.csv": "Gyroscope y (rad/s)",
     "L0.40_run1.csv": "Gyroscope y (rad/s)",
-    "L0.40_run2.csv": "Gyroscope x (rad/s)", 
-    "L0.50_run1.csv": "Gyroscope y (rad/s)",
-    "L0.50_run2.csv": "Gyroscope y (rad/s)",
-    "L0.70_run1.csv": "Gyroscope z (rad/s)", 
+    "L0.40_run2.csv": "Gyroscope x (rad/s)",
+    "L0.50_run1.csv": "Gyroscope z (rad/s)",
+    "L0.50_run2.csv": "Gyroscope x (rad/s)",
+    "L0.70_run1.csv": "Gyroscope y (rad/s)",
     "L0.70_run2.csv": "Gyroscope y (rad/s)"
 }
 
