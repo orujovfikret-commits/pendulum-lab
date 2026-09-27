@@ -15,7 +15,7 @@ for f in files:
     t = df["Time (s)"].values
     dt = t[1] - t[0]
 
-    mask = (t > 1.0) & (t < (t.max() - 1.0))
+    mask = (t > 1.0) &   (t < (t.max() - 1.0))
     df_clean = df[mask] if mask.sum() > 10 else df
     t_clean = df_clean["Time (s)"].values
 
