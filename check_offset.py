@@ -4,6 +4,19 @@ import numpy as np
 import pandas as pd
 from scipy.signal import find_peaks
 
+AXIS = {
+    "L0.20_run1.csv": "Gyroscope y (rad/s)",
+    "L0.20_run2.csv": "Gyroscope y (rad/s)",
+    "L0.30_run1.csv": "Gyroscope y (rad/s)",
+    "L0.30_run2.csv": "Gyroscope y (rad/s)",
+    "L0.40_run1.csv": "Gyroscope y (rad/s)",
+    "L0.40_run2.csv": "Gyroscope x (rad/s)",
+    "L0.50_run1.csv": "Gyroscope y (rad/s)",
+    "L0.50_run2.csv": "Gyroscope x (rad/s)",
+    "L0.70_run1.csv": "Gyroscope y (rad/s)",
+    "L0.70_run2.csv": "Gyroscope y (rad/s)"
+}
+
 files = sorted(glob.glob("L*.csv"))
 results = []
 
@@ -15,17 +28,17 @@ for f in files:
     t = df["Time (s)"].values
     dt = t[1] - t[0]
 
-    mask = (t > 1.0) &   (t < (t.max() - 1.0))
+    mask = (t > 1.0) & (t < (t.max() - 1.0))
     df_clean = df[mask] if mask.sum() > 10 else df
     t_clean = df_clean["Time (s)"].values
 
-    col = "Gyroscope y (rad/s)"
+    col = AXIS.get(name, "Gyroscope y (rad/s)")
     if col not in df_clean.columns:
         col = df_clean.columns[1]
 
     s = df_clean[col].values
 
-    peaks, _ = find_peaks(s, distance=int(0.4/dt), prominence=0.1)
+    peaks, _ = find_peaks(s, distance=int(0.8 / dt), prominence=0.1)
 
     if len(peaks) > 1:
         periods = np.diff(t_clean[peaks])
