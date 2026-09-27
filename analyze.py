@@ -5,7 +5,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.signal import find_peaks
 
-# TODO: Check images in axis_plots/ and update the correct rotation axis for each file in the AXIS dictionary
 AXIS = {
     "L0.20_run1.csv": "Gyroscope y (rad/s)",
     "L0.20_run2.csv": "Gyroscope y (rad/s)",
@@ -13,7 +12,7 @@ AXIS = {
     "L0.30_run2.csv": "Gyroscope y (rad/s)",
     "L0.40_run1.csv": "Gyroscope y (rad/s)",
     "L0.40_run2.csv": "Gyroscope x (rad/s)",
-    "L0.50_run1.csv": "Gyroscope z (rad/s)",
+    "L0.50_run1.csv": "Gyroscope y (rad/s)",
     "L0.50_run2.csv": "Gyroscope x (rad/s)",
     "L0.70_run1.csv": "Gyroscope y (rad/s)",
     "L0.70_run2.csv": "Gyroscope y (rad/s)"
@@ -40,7 +39,7 @@ for f in files:
 
     s = df_clean[col].values
 
-    peaks, _ = find_peaks(s, distance=int(0.4/dt), prominence=0.1)
+    peaks, _ = find_peaks(s, distance=int(0.8 / dt), prominence=0.1)
 
     if len(peaks) > 1:
         periods = np.diff(t_clean[peaks])
@@ -49,21 +48,21 @@ for f in files:
         T = 0.0
 
     print(f"File: {name} | Axis: {col.split(' ')[1]} | T = {T:.3f} s")
-    
+
     if T > 0:
-        results.append({"L": L, "T": T, "T2": T**2})
+        results.append({"L": L, "T": T, "T2": T ** 2})
 
 data = pd.DataFrame(results).sort_values("L")
 L_vals = data["L"].values
 T2_vals = data["T2"].values
 
-m, c = np.polyfit(L_vals, T2_vals, 1)
-g = (4 * np.pi**2) / m
+(m, c), cov = np.polyfit(L_vals, T2_vals, 1, cov=True)
+m_err = np.sqrt(cov[0, 0])
 
-diff = T2_vals - (m * L_vals + c)
-g_err = abs(g * np.std(diff))
+g = (4 * np.pi ** 2) / m
+g_err = g * (m_err / m)
 
-print(f"\nSlope: {m:.3f}")
+print(f"\nSlope: {m:.3f} +/- {m_err:.3f}")
 print(f"g = {g:.2f} +/- {g_err:.2f} m/s^2")
 
 plt.figure(figsize=(8, 5))
