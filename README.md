@@ -19,7 +19,7 @@ At first, I got crazy numbers for gravity because of a few mistakes in the scrip
 Plotting period squared ($T^2$) against string length ($L$) gives a straight line where $g = 4\pi^2 / \text{slope}$.
 
 Running `analyze.py` gave:
-`g = 9.74 ± 0.18 m/s²`
+`g = 12.55 ± 1.55 m/s²`
 
 As expected in a real setup, not all run pairs matched up 100% perfectly. Some length combinations still showed minor discrepancies between run 1 and run 2 due to slight sideways wobbles and initial twisting, but keeping these imperfect results reflects what actually happened during the lab.
 
