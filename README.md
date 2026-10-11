@@ -11,13 +11,17 @@ Not every run swung along the exact same direction, and sometimes the phone spun
 At first, I got crazy numbers for gravity because of a few mistakes in the script:
 
 1. **Peak detection was catching noise:** The script originally used `distance=0.4s` in `find_peaks`. Since a pendulum period is around 1.0s to 1.6s, setting it to 0.4s made the code count high-frequency ripples as full swings. Increasing the distance to `0.8s` fixed this.
-2. **Wrong axis on L0.50_run1:** I initially selected the Z axis because the wave looked huge, but it turned out to be double-frequency twisting noise (14 peaks in 10 seconds). Switching it to the Y axis gave the real swing (~7 peaks in 10 seconds).
-3. **Error formula:** Fixed the error propagation formula to calculate uncertainty in gravity directly from the slope of the $T^2$ vs $L$ line.
+2. **False peaks in L0.50 and L0.70:** In `L0.50_run1` and `L0.70_run1`, the phone twisted a bit or the swing slowed down, creating tiny fake ripples that `find_peaks` thought were full swings. I added `prominence` so it ignores the small bumps and only counts the real swings. You can check the marked peaks in the `plots/` folder!
+3. **Wrong axis on L0.50_run1:** I initially selected the Z axis because the wave looked huge, but it turned out to be double-frequency twisting noise (14 peaks in 10 seconds). Switching it to the Y axis gave the real swing (~7 peaks in 10 seconds).
+4. **Error formula:** Fixed the error propagation formula to calculate uncertainty in gravity directly from the slope of the $T^2$ vs $L$ line.
 
 ## Final Results
 Plotting period squared ($T^2$) against string length ($L$) gives a straight line where $g = 4\pi^2 / \text{slope}$.
 
-Running `analyze.py` gives our final result and updates `gravity_fit_plot.png`.
+Running `analyze.py` gave:
+`g = 9.74 ± 0.18 m/s²`
+
+Not all run pairs match up 100% perfectly yet because of little things like friction or slight twisting in some trials, but this is what I got after cleaning up the peaks.
 
 ---
-*Note: AI helped me understand how find_peaks works, how to properly calculate slope uncertainty, and how to spot double-frequency twisting noise in gyroscope data.*
+*Note: AI helped me understand how find_peaks and prominence work, how to properly calculate slope uncertainty, and how to spot double-frequency twisting noise in gyroscope data.*
