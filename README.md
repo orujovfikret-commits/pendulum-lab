@@ -21,7 +21,7 @@ Plotting period squared ($T^2$) against string length ($L$) gives a straight lin
 Running `analyze.py` gave:
 `g = 9.74 ± 0.18 m/s²`
 
-Not all run pairs match up 100% perfectly yet because of little things like friction or slight twisting in some trials, but this is what I got after cleaning up the peaks.
+As expected in a real setup, not all run pairs matched up 100% perfectly. Some length combinations still showed minor discrepancies between run 1 and run 2 due to slight sideways wobbles and initial twisting, but keeping these imperfect results reflects what actually happened during the lab.
 
 ---
 *Note: AI helped me understand how find_peaks and prominence work, how to properly calculate slope uncertainty, and how to spot double-frequency twisting noise in gyroscope data.*
