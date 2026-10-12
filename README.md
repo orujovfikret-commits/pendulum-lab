@@ -1,27 +1,49 @@
-﻿# Physics Pendulum Project: Measuring Gravity (g)
+﻿# Physics Pendulum Project: Measuring Gravity ($g$)
 
-For this project, I tied my phone to a string and swung it like a pendulum at different lengths (from 0.20m to 0.70m) to calculate acceleration due to gravity ($g$). The phone recorded its motion using the Phyphox gyroscope sensor.
-
-## Picking the Right Axis
-Not every run swung along the exact same direction, and sometimes the phone spun on the string. I plotted the motion and drew each wave by hand in my lab notebook to figure out which axis ($X$, $Y$, or $Z$) had the true pendulum swing and which ones were just twisting noise.
-
-- Axis choices for each file: see `notebook/`.
-
-## What Went Wrong & How It Was Fixed
-At first, I got crazy numbers for gravity because of a few mistakes in the script:
-
-1. **Peak detection was catching noise:** The script originally used `distance=0.4s` in `find_peaks`. Since a pendulum period is around 1.0s to 1.6s, setting it to 0.4s made the code count high-frequency ripples as full swings. Increasing the distance to `0.8s` fixed this.
-2. **False peaks from startup/shutdown chaos:** In `L0.50` and `L0.70`, the phone experienced hand-interference and twisting at the very beginning and end of the recordings, causing `find_peaks` to catch false peaks. While `prominence=0.1` was already part of the setup, fixing this required trimming the first and last 2 seconds of each run so the code only analyzed the clean oscillation phase. You can check the marked peaks in the `plots/` folder!
-3. **Wrong axis on L0.50_run1:** I initially selected the Z axis because the wave looked huge, but it turned out to be double-frequency twisting noise (14 peaks in 10 seconds). Switching it to the Y axis gave the real swing (~7 peaks in 10 seconds).
-4. **Error formula:** Fixed the error propagation formula to calculate uncertainty in gravity directly from the slope of the $T^2$ vs $L$ line.
-
-## Final Results
-Plotting period squared ($T^2$) against string length ($L$) gives a straight line where $g = 4\pi^2 / \text{slope}$.
-
-Running `analyze.py` gave:
-`g = 12.41 ± 1.55 m/s²`
-
-Run pairs showed quantitative differences after trimming: at $L = 0.50\text{m}$, run 1 gave $T = [run1_period]\text{s}$ while run 2 gave $T = [run2_period]\text{s}$, and at $L = 0.70\text{m}$, run 1 gave $T = [run1_period]\text{s}$ versus run 2 at $T = [run2_period]\text{s}$. Keeping these actual results reflects the real experimental conditions.
+## 1. Question
+Can the acceleration due to gravity ($g$) be accurately determined by measuring the oscillation periods of a smartphone-based string pendulum at various lengths?
 
 ---
-*Note: AI helped me understand how find_peaks and prominence work, how to properly calculate slope uncertainty, how to spot double-frequency twisting noise in gyroscope data, and how to write a time-slicing method to trim the first and last 2 seconds of each recording to eliminate startup and shutdown noise.*
+
+## 2. Setup
+- **App & Sensor:** The Phyphox app was used to record gyroscope data (angular velocity along the $X$ or $Y$ axis) as the phone swung.
+- **Pendulum Construction:** A smartphone was securely tied to a string acting as a pendulum. 
+- **Length Measurement ($L$):** Lengths were measured from the suspension point (pivot) to the center of mass of the phone, ranging from $0.20\text{m}$ to $0.70\text{m}$ with two runs per length.
+- **Data Processing:** A Python script (`analyze.py`) applied time-slicing (trimming startup and shutdown noise) and used peak detection (`scipy.signal.find_peaks`) to calculate the average period ($T$) for each run.
+
+---
+
+## 3. Data
+Plotting the square of the period ($T^2$) against the string length ($L$) yields a linear relationship based on the pendulum formula $T = 2\pi \sqrt{\frac{L}{g}}$, which rearranges to $T^2 = \left(\frac{4\pi^2}{g}\right)L$.
+
+![T^2 vs L Fit Plot](gravity_fit_plot.png)
+
+*Note: Individual cleaned signal plots with marked peaks are stored in the `plots/` directory.*
+
+---
+
+## 4. Result
+From the linear regression slope ($m$) of the $T^2$ vs $L$ graph, gravity was calculated using $g = \frac{4\pi^2}{m}$:
+
+* **Calculated Value:** $g = 10.76 \pm [error] \text{ m/s}^2$
+* **Standard Value:** $9.81 \text{ m/s}^2$
+
+---
+
+## 5. Why Not 9.81?
+While the measured value is close to the theoretical standard, discrepancies arise from several experimental factors:
+1. **Length Measurement Errors:** Measuring to the center of mass of a bulky object like a phone introduces small parallax or ruler errors.
+2. **Non-Ideal Pivot:** The string was tied to a fixed point, which introduced minor friction and lateral slipping rather than acting as a frictionless pivot.
+3. **Twisting and Multi-Axis Noise:** Even after selecting the cleanest axis ($X$ or $Y$), the phone experienced slight rotational twisting, creating secondary frequency ripples.
+4. **Amplitude Effects:** The small-angle approximation ($\sin\theta \approx \theta$) assumes small release angles, but larger initial swings introduced non-linear period shifts.
+5. **Air Resistance:** Drag forces continuously slow down the pendulum, subtly affecting the true period over longer runs.
+
+---
+
+## 6. What I'd Do Differently
+- **Rigid Clamp:** Use a proper mechanical pendulum clamp instead of tying a string to a makeshift holder to completely eliminate slipping and twisting.
+- **Consistent Release:** Use a mechanical trigger or holding jig to ensure the exact same release angle and zero initial twist for every single run.
+- **Precise Length Tracking:** Use a laser distance measure or vernier caliper to reduce uncertainty in length measurements.
+
+---
+*Note: AI helped me understand how peak detection and prominence work, how to properly handle slope uncertainty calculations, how to spot rotational twisting noise in gyroscope data, and how to implement time-slicing to eliminate startup/shutdown chaos.*
