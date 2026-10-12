@@ -9,7 +9,7 @@ Bu işi qurtarmış biri kimi deyirəm, əgər bu laba başlayırsınızsa, burd
 - Xətkeş
 
 ## 2. Qurğu və Səhvlər
-- **Asqı:** Telefon iki paralel şaquli ipdən asılmışdı[cite: 1]. İplərin yuxarıda və aşağıda arasındakı məsafəni yoxlasanız eyni olduğunu görərsiniz (parallel asqı). Bu, telefonu fırlanmadan qorumaq üçündür[cite: 1].
+- **Asqı:** Telefon iki paralel şaquli ipdən asılmışdı. İplərin yuxarıda və aşağıda arasındakı məsafəni yoxlasanız eyni olduğunu görərsiniz (parallel asqı). Bu, telefonu fırlanmadan qorumaq üçündür.
 - **Ölçü:** Uzunluğu yuxarıdan telefonun tən ortasına (kütlə mərkəzinə) qədər şaquli olaraq dəqiq ölçün.
 
 ## 3. Ölçmələr
@@ -22,4 +22,4 @@ Bu işi qurtarmış biri kimi deyirəm, əgər bu laba başlayırsınızsa, burd
 
 ## 5. Nəticə
 - Bizim aldığımız rəqəm 10.76 ± 0.58 m/s^2 çıxdı (normalda 9.81 olmalıdır).
-- C3 hesablamasına görə c / maillik (0.1842 / 3.669) təxminən 0.05 m (5 sm) verir ki, bu da uzunluq ölçərkən baş verən kiçik sistematik fərqi göstərir.
+- Qrafikdəki xəttin kəsişməsini (c) mailliyə bölsəniz (0.1842 / 3.669), təxminən 0.05 m (5 sm) edir ki, bu da uzunluq ölçərkən baş verən kiçik sistematik fərqi göstərir.
