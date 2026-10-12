@@ -31,8 +31,14 @@ for f in files:
     t = df["Time (s)"].values
     dt = t[1] - t[0]
 
-    # cut last and first 2 secs
-    mask = (t > 2.0) & (t < (t.max() - 2.0))
+    if "L0.50" in name:
+        t_max_limit = 10.2
+    elif "L0.70" in name:
+        t_max_limit = 17.5
+    else:
+        t_max_limit = t.max() - 2.0
+
+    mask = (t > 2.0) & (t < t_max_limit)  # cut start and end seconds from run
     df_clean = df[mask]
     t_clean = df_clean["Time (s)"].values
 
@@ -63,7 +69,9 @@ for f in files:
     plt.title(f"{name} - Cleaned Signal & Peaks")
     plt.legend()
     plt.grid(True)
-    plt.savefig(f"plots/{name.replace('.csv', '.png')}")
+
+    plot_name = f"L{str(L).replace('.', '_')}_{name.split('_')[1].replace('.csv', '')}.png"
+    plt.savefig(f"plots/{plot_name}")
     plt.close()
 
 data = pd.DataFrame(results).sort_values("L")
