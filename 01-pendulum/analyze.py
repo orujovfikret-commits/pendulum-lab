@@ -18,7 +18,7 @@ AXIS = {
     "L0.70_run2.csv": "Gyroscope y (rad/s)"
 }
 
-files = sorted(glob.glob("L*.csv"))
+files = sorted(glob.glob("data/L*.csv"))
 results = []
 
 os.makedirs("plots", exist_ok=True)
@@ -38,7 +38,7 @@ for f in files:
     else:
         t_max_limit = t.max() - 2.0
 
-    mask = (t > 2.0) & (t < t_max_limit)  # cut start and end seconds from run
+    mask = (t > 2.0) & (t < t_max_limit)
     df_clean = df[mask]
     t_clean = df_clean["Time (s)"].values
 
@@ -47,7 +47,6 @@ for f in files:
         col = df_clean.columns[1]
 
     s = df_clean[col].values
-
     peaks, _ = find_peaks(s, distance=int(0.8 / dt), prominence=0.1)
 
     if len(peaks) > 1:
@@ -66,7 +65,7 @@ for f in files:
     plt.plot(t_clean[peaks], s[peaks], "ro", label="Peaks")
     plt.xlabel("Time (s)")
     plt.ylabel(col)
-    plt.title(f"{name} - Cleaned Signal & Peaks")
+    plt.title(f"{name} Cleaned Signal & Peaks")
     plt.legend()
     plt.grid(True)
 
@@ -85,6 +84,7 @@ g = (4 * np.pi ** 2) / m
 g_err = g * (m_err / m)
 
 print(f"\nSlope: {m:.3f} +/- {m_err:.3f}")
+print(f"Intercept (c): {c:.4f}")
 print(f"g = {g:.2f} +/- {g_err:.2f} m/s^2")
 
 plt.figure(figsize=(8, 5))
