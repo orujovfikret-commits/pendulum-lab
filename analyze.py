@@ -21,6 +21,8 @@ AXIS = {
 files = sorted(glob.glob("L*.csv"))
 results = []
 
+os.makedirs("plots", exist_ok=True)
+
 for f in files:
     name = os.path.basename(f)
     L = float(name.split("_")[0].replace("L", ""))
@@ -29,7 +31,8 @@ for f in files:
     t = df["Time (s)"].values
     dt = t[1] - t[0]
 
-    mask = (t > 1.0) & (t < (t.max() - 1.0))
+    # cut last and first 2 secs
+    mask = (t > 2.0) & (t < (t.max() - 2.0))
     df_clean = df[mask]
     t_clean = df_clean["Time (s)"].values
 
@@ -51,6 +54,17 @@ for f in files:
 
     if T > 0:
         results.append({"L": L, "T": T, "T2": T ** 2})
+
+    plt.figure(figsize=(8, 4))
+    plt.plot(t_clean, s, label="Signal")
+    plt.plot(t_clean[peaks], s[peaks], "ro", label="Peaks")
+    plt.xlabel("Time (s)")
+    plt.ylabel(col)
+    plt.title(f"{name} - Cleaned Signal & Peaks")
+    plt.legend()
+    plt.grid(True)
+    plt.savefig(f"plots/{name.replace('.csv', '.png')}")
+    plt.close()
 
 data = pd.DataFrame(results).sort_values("L")
 L_vals = data["L"].values
