@@ -17,7 +17,7 @@ AXIS = {
     "L0.70_run2.csv": "Gyroscope y (rad/s)"
 }
 
-files = sorted(glob.glob("L*.csv"))
+files = sorted(glob.glob("data/L*.csv"))
 g_standard = 9.81
 
 print(f"{'File':<18} | {'L_nominal (m)':<13} | {'T (s)':<6} | {'L_calc (m)':<10} | {'Offset (cm)':<10}")
