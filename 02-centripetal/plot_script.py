@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 os.makedirs('plots', exist_ok=True)
 
-df = pd.read_csv('data/R0.20_test.csv')
+df = pd.read_csv('data/R0.20_test2.csv')
 
 plt.figure()
 plt.plot(df['Time (s)'], df['Angular velocity (rad/s)'])
