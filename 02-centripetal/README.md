@@ -4,6 +4,12 @@
 This folder contains data, logs, scripts, and plots for Experiment 2.
 
 ## Methodology & Attribution
-* **Data Collection:** Phone mounted horizontally on rotating chair at various radii (R = 0.05 m to 0.20 m). Chair tilt was checked with Level on Measure app.
-* **Plotting Script:** AI Helped me to learn to use the libraries ('pandas', 'matlolib', 'os'), and setting up 'dpi=300' for high resolution graphs. I reviewed every line to make sure I understand how everything works.
-* **Notes for log.md:** AI Gave me a starting template, but I wrote down all the data, errors, and analysis by myself.
+
+
+* **Data Collection & Physical Trials:** Done entirely by me (mounted the phone on the chair, measured radii with a meter stick, checked chair tilt, and did all the stopwatch and sensor tests).
+
+
+* **Scripts & Data Verification (`calculate_metrics.py`, plotting):** AI helped me learn how to use `pandas` and `matplotlib` (including `dpi=300` for plots), structured the CSV parsing code, and wrote the decay-ratio checks. I reviewed every line, ran the scripts to get the metrics ($w_1/w_0 = 0.672$, $w_2/w_1 = 0.582$), and verified the results myself.
+
+
+* **Notebook (`log.md`):** AI gave me a markdown layout template, but I wrote all the actual data, error notes, manual calculations, and analysis myself.

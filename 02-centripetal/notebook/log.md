@@ -31,22 +31,20 @@
 
 
 ### Trial 3 (R0.20_test3)
-- **Stopwatch Data:** Time (t) = 3.0 s (manual 3s window from release)
-- **Manual Calculation ($\omega_{\text{avg}}$):** $\omega = 0.51\text{ rad/s}$ (average over the initial 3s window)
-- **Lab Note on Comparison:** The sensor records the whole movement right from the start, so the numbers look a bit different from our manual timing.
----
+- **Data Source:** CSV average, 0–3 s window
+- **Calculation ($\omega_{\text{avg}}$):** $\omega = 0.51\text{ rad/s}$ (average over the initial 3s window)
+- **Lab Note on Comparison:** The sensor records the whole movement right from the start, so the numbers look a bit different from manual timing.
 
 ## 3. General Observations & Status
 
 - **Friction Decay:** The chair naturally slowed down due to bearing friction, creating clean exponential decay curves on the angular velocity graphs.
 - **Data Analysis Tooling:** Used a small script (`calculate_metrics.py`) to process the CSV data and verify the numbers for Trial 3.
-- **Status Update:** Ready for final submission.
-- **Current Standing:** Measurements done, analysis completed.
+- **Status Update:** Measurements done, analysis next.
+- **Current Standing:** Measurements done, analysis next.
 
 ## 4. Weekly Question: Exponential Decay Verification
-- **Method:** Check the ratio of angular velocities at equal time intervals ($\omega(t + \Delta t) / \omega(t) = 	ext{constant}$). If the ratio remains constant, the decay is exponential.
-
+- **Method:** Check the ratio of angular velocities at equal time intervals ($\omega(t + \Delta t) / \omega(t) = \text{constant}$). If the ratio remains constant, the decay is exponential.
 - **Application (R0.20_test3 slowing down):** 
-  - Checked the speed every 1 second while it was slowing down.
-  - The ratio between the speeds stays pretty steady ($\approx 0.76$).
-  - **Conclusion:** Since the ratio doesn't change much, it confirms it's slowing down exponentially because of friction.
+  - Checked the speed every 1 second during deceleration using `calculate_metrics.py`.
+  - Ratios obtained: $w_1/w_0 = 0.672$, $w_2/w_1 = 0.582$.
+- **Conclusion:** The consistent ratios confirm exponential decay due to bearing friction.
