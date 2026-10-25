@@ -4,22 +4,34 @@ import matplotlib.pyplot as plt
 
 os.makedirs('plots', exist_ok=True)
 
-df = pd.read_csv('data/R0.20_test2.csv')
+data_dir = '02-centripetal/data' if os.path.exists('02-centripetal/data') else 'data'
 
-plt.figure()
-plt.plot(df['Time (s)'], df['Angular velocity (rad/s)'])
-plt.title('Gyroscope')
-plt.xlabel('Time')
-plt.ylabel('Omega')
-plt.savefig('plots/test_gyro.png')
-plt.close()
+files = sorted([f for f in os.listdir(data_dir) if
+                f.endswith('.csv') and '_time' not in f and 'accel' not in f and 'gyro' not in f])
 
-plt.figure()
-plt.plot(df['Time (s)'], df['Acceleration (m/s^2)'])
-plt.title('Accelerometer')
-plt.xlabel('Time')
-plt.ylabel('Accel')
-plt.savefig('plots/test_accel.png')
-plt.close()
+for filename in files:
+    filepath = os.path.join(data_dir, filename)
+    df = pd.read_csv(filepath)
+    test_name = filename.replace('.csv', '')
+
+    plt.figure(figsize=(8, 4))
+    plt.plot(df['Time (s)'], df['Angular velocity (rad/s)'], marker='o', color='tab:blue', linewidth=1.5)
+    plt.title(f'Angular Velocity - {test_name}')
+    plt.xlabel('Time (s)')
+    plt.ylabel('Angular Velocity (rad/s)')
+    plt.grid(True)
+    plt.tight_layout()
+    plt.savefig(f'plots/{test_name}_gyro.png', dpi=300)
+    plt.close()
+
+    plt.figure(figsize=(8, 4))
+    plt.plot(df['Time (s)'], df['Acceleration (m/s^2)'], marker='s', color='tab:red', linewidth=1.5)
+    plt.title(f'Accelerometer - {test_name}')
+    plt.xlabel('Time (s)')
+    plt.ylabel('Acceleration (m/s²)')
+    plt.grid(True)
+    plt.tight_layout()
+    plt.savefig(f'plots/{test_name}_accel.png', dpi=300)
+    plt.close()
 
 print('Done')
