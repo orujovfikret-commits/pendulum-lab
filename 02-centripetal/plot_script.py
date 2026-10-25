@@ -3,7 +3,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 os.makedirs('plots', exist_ok=True)
-
 data_dir = '02-centripetal/data' if os.path.exists('02-centripetal/data') else 'data'
 
 files = sorted([f for f in os.listdir(data_dir) if
@@ -33,5 +32,3 @@ for filename in files:
     plt.tight_layout()
     plt.savefig(f'plots/{test_name}_accel.png', dpi=300)
     plt.close()
-
-print('Done')
