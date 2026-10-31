@@ -1,0 +1,12 @@
+﻿File: R0.05_test1.csv | R_measured: 0.05 | R_fit: 0.0386 +/- 0.0125 | c: 0.1238
+File: R0.05_test2.csv | R_measured: 0.05 | R_fit: 0.0479 +/- 0.0209 | c: 0.1636
+File: R0.10_test1.csv | R_measured: 0.1 | R_fit: 0.1015 +/- 0.0088 | c: 0.0854
+File: R0.10_test2.csv | R_measured: 0.1 | R_fit: 0.1181 +/- 0.0331 | c: 0.1481
+File: R0.15_test1.csv | R_measured: 0.15 | R_fit: 0.1598 +/- 0.0148 | c: 0.0602
+File: R0.15_test2.csv | R_measured: 0.15 | R_fit: 0.1411 +/- 0.0216 | c: 0.2498
+File: R0.20_test.csv | R_measured: 0.2 | R_fit: 0.2540 +/- 0.0112 | c: 0.1280
+File: R0.20_test2.csv | R_measured: 0.2 | R_fit: 0.1618 +/- 0.0053 | c: 0.1385
+File: R0.20_test3.csv | R_measured: 0.2 | R_fit: 0.2079 +/- 0.0200 | c: 0.1737
+
+Slope (k): 1.0689 +/- 0.1517
+Intercept (d): -0.0058 +/- 0.0220
