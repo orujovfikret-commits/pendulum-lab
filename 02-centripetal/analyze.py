@@ -4,29 +4,41 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-all_files = sorted(glob.glob("data/R*.csv"))
-files = [f for f in all_files if "only" not in f]
-
+files = sorted(glob.glob("data/R*.csv"))
 results = []
+
 os.makedirs("plots", exist_ok=True)
+
+time_windows = {
+    "R0.05_test1.csv": (8.0, 10.0),
+    "R0.05_test2.csv": (8.0, 10.5),
+    "R0.10_test1.csv": (9.0, 12.0),
+    "R0.10_test2.csv": (10.0, 12.0),
+    "R0.15_test1.csv": (8.5, 10.0),
+    "R0.15_test2.csv": (9.5, 11.0),
+    "R0.20_test2.csv": (12.0, 15.5),
+    "R0.20_test3.csv": (8.0, 11.0)
+}
 
 for f in files:
     name = os.path.basename(f)
+    if name == "R0.20_test.csv" or "only" in name or name not in time_windows:
+        continue
+
     R = float(name.split("_")[0].replace("R", ""))
 
     df = pd.read_csv(f)
     t = df["Time (s)"].values if "Time (s)" in df.columns else df.iloc[:, 0].values
 
-    gyro_cols = [c for c in df.columns if "Gyroscope" in c]
-    gyro_col = next((c for c in gyro_cols if "z" in c.lower()), gyro_cols[0] if gyro_cols else df.columns[1])
-
-    accel_cols = [c for c in df.columns if "Acceleration" in c or "accel" in c.lower()]
-    accel_col = next((c for c in accel_cols if "z" in c.lower()), accel_cols[0] if accel_cols else df.columns[2])
+    gyro_col = next((c for c in df.columns if "gyro" in c.lower()), df.columns[1])
+    accel_col = next((c for c in df.columns if "accel" in c.lower()), df.columns[2])
 
     omega = df[gyro_col].values
     accel = df[accel_col].values
 
-    mask = (omega > 0.5) & (t < t[-1] - 1.0)
+    t_start, t_end = time_windows[name]
+    mask = (t >= t_start) & (t <= t_end)
+    
     t_clean = t[mask]
     omega_clean = omega[mask]
     accel_clean = accel[mask]

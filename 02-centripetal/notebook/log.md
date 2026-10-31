@@ -37,14 +37,14 @@
 
 ## 3. General Observations & Status
 
-- **Friction Decay:** The chair naturally slowed down due to bearing friction, creating clean exponential decay curves on the angular velocity graphs.
-- **Data Analysis Tooling:** Used a small script (`calculate_metrics.py`) to process the CSV data and verify the numbers for Trial 3.
-- **Status Update:** Measurements done, analysis next.
-- **Current Standing:** Measurements done, analysis next.
+- **Friction Decay:** The chair slowed down naturally because of bearing friction, which gave nice exponential decay curves on the omega-time graphs.
+- **Data Processing:** Used `analyze.py` to go through the 8 valid CSVs (skipped `R0.20_test.csv` since it was just a single test run). Added time windows to cut out the manual pushing parts so I only fit the clean slow-down phase.
+- **Final Results:** Plotting the fitted radii against the measured radii gave a slope of $k = 0.90 \pm 0.26$ and an intercept of $d = -0.014 \pm 0.035\text{ m}$.
+- **Status:** Analysis is done, plots are saved in `plots/`, results are in `results.txt`, and everything is ready to commit.
 
 ## 4. Weekly Question: Exponential Decay Verification
-- **Method:** Check the ratio of angular velocities at equal time intervals ($\omega(t + \Delta t) / \omega(t) = \text{constant}$). If the ratio remains constant, the decay is exponential.
-- **Application (R0.20_test3 slowing down):** 
-  - Checked the speed every 1 second during deceleration using `calculate_metrics.py`.
-  - Ratios obtained: $w_1/w_0 = 0.672$, $w_2/w_1 = 0.582$.
-- **Conclusion:** The consistent ratios confirm exponential decay due to bearing friction.
+- **Method:** Checked the ratio of angular velocities at equal time steps ($\omega(t + \Delta t) / \omega(t)$). If the ratio stays roughly constant, it's an exponential decay.
+- **Application (`R0.20_test3` slowing down):** 
+  - Checked the speed every 1 second during the slow-down phase.
+  - Got ratios around $\omega_1/\omega_0 = 0.672$ and $\omega_2/\omega_1 = 0.582$.
+- **Conclusion:** The ratios are close enough to confirm it's an exponential decay caused by bearing friction.
