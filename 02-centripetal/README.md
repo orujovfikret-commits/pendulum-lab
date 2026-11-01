@@ -41,7 +41,8 @@ Can we check if the centripetal acceleration formula $a = \omega^2 R$ actually w
 I plotted the fitted radii ($R_{\text{fit}}$) against the measured radii ($R$). Since the relation is $R_{\text{fit}} = k \cdot R + d$, an ideal setup should give a slope of $k = 1$ and an intercept of $d = 0$.
 
 ![a vs omega squared](plots/R0.20_test3_fit.png)
-*Linear acceleration vs $\omega^2$ fit plot for an individual test run.*
+
+*Linear acceleration vs ω² fit plot for an individual test run.*
 
 ![R_fit vs R](plots/R_fit_vs_R.png)
 *Summary plot of fitted radius $R_{\text{fit}}$ vs measured radius $R$ across all valid runs.*
