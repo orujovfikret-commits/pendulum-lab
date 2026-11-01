@@ -27,3 +27,11 @@ Bu işi qurtarmış biri kimi deyirəm, əgər bu laba başlayırsınızsa, burd
 - Kreslo tam dayanmamış tələsik yeni fırlatmanı başlatmayın, bu, məlumatları qarışdırır.
 - Yalnız bir fırlatmadan ibarət olan yarımçıq test fayllarını (`R0.20_test.csv` kimi) əvvəlcədən təmizləyin.
 - Kodda zaman pəncərəsini seçərkən diqqətli olun ki, uyğun nöqtələr düzgün seçilsin.
+
+## Təhlükəsizlik
+- Telefonu oturacağa skotçla möhkəm bərkitmək vacibdir ki, fırlanma zamanı sürüşüb düşməsin.
+- Fırlanmaya ehtiyatla, yavaş başlayın və həddindən artıq güc tətbiq etməyin.
+- Əgər fırlanma zamanı telefon sürüşərsə və ya kreslo silkələnərsə, dərhal hərəkəti dayandırıb yenidən yoxlayın.
+
+## Mənim nəticəm
+- Xətti reqressiya nəticəsində maillik $k = 0.90 \pm 0.26$ və kəsişmə $d = -0.014 \pm 0.035\text{ m}$ alındı. Bu qiymətlər nəzəri gözləntilərə ($k = 1, d = 0$) xəta hüdudları daxilində uyğundur və mərkəzəqaçma təcili düsturunu doğruldur.

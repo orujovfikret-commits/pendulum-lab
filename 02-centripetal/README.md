@@ -1,6 +1,6 @@
 # Experiment 2: Centripetal Acceleration (a = ω²R)
 
-## 1. Question
+1. ## Question
 
 Can we check if the centripetal acceleration formula $a = \omega^2 R$ actually works by putting a phone on a spinning office chair at different distances?
 
@@ -62,9 +62,10 @@ My calculated slope is $0.90 \pm 0.26$ and intercept is $-0.014\text{ m}$. Both 
 
 1. **Sensor Position:** The accelerometer chip inside the phone isn't right at the exact physical center where I measured with the ruler. However, because the error range ($\pm 0.035\text{ m}$) is bigger than $d$ ($-0.014\text{ m}$), our data can't prove a specific offset.
 2. **Seat Tilt:** A slight chair tilt (-2° to -3°) makes gravity mix into the phone's acceleration readings, changing the vertical intercept $c$ in individual runs ($0.03\text{ to } 0.23\text{ m/s}^2$).
-3. **Chair Slowing Down:** Friction makes the chair slow down, which creates a little bit of sideways (tangential) acceleration if the phone isn't aimed right at the center.
+3. **Chair Slowing Down:** Friction makes the chair slow down, which creates a little bit of sideways (tangential) acceleration if the phone isn't aimed right at the center. Since the phone was placed straight along the radius, the measured radial acceleration axis did not capture this minor tangential component directly.
 4. **Measuring R:** Using a ruler to measure from the middle of the chair to the phone has a tiny error (around $\pm 0.5\text{ cm}$), and that throws off the smaller radii way more than the bigger ones.
 5. **Decay Dynamics:** Looking at the speed drops ($\omega_1/\omega_0 = 0.672$, $\omega_2/\omega_1 = 0.582$) shows it's just slowing down normally, though I didn't have enough data points to prove it's a pure exponential curve.
+6. **Difference from Experiment 1:** In Experiment 1, the intercept parameter $c$ had units of $\text{s}^2$ and the length offset was found via $c / \text{slope}$ (~5 cm). Here, the intercept $d$ is directly in meters, representing small systematic measurement errors and the physical offset of the sensor chip inside the phone.
 
 ---
 
