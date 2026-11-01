@@ -45,7 +45,8 @@ I plotted the fitted radii ($R_{\text{fit}}$) against the measured radii ($R$). 
 *Linear acceleration vs ω² fit plot for an individual test run.*
 
 ![R_fit vs R](plots/R_fit_vs_R.png)
-*Summary plot of fitted radius $R_{\text{fit}}$ vs measured radius $R$ across all valid runs.*
+
+*Summary plot of fitted radius R_fit vs measured radius R across all valid runs.*
 
 ---
 
