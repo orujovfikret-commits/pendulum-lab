@@ -1,6 +1,6 @@
 # Experiment 2: Centripetal Acceleration (a = ω²R)
 
-1. ## Question
+## 1. Question
 
 Can we check if the centripetal acceleration formula $a = \omega^2 R$ actually works by putting a phone on a spinning office chair at different distances?
 
